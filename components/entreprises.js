@@ -1,10 +1,10 @@
 
 
-export default function Entreprise(){
+export default function Entreprise(data){
     return (
         <>
-        <div className="row my-5">
-				<div className="col-lg-4 py-3">
+        	<div className="row my-5">
+					<div className="col-lg-4 py-3">
 					<div className="card-blog">
 						<div className="header">
 							<div className="post-thumb">
@@ -17,98 +17,6 @@ export default function Entreprise(){
 						</div>
 					</div>
 				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-				<div className="col-lg-4 py-3">
-					<div className="card-blog">
-						<div className="header">
-							<div className="post-thumb">
-								<img src="../assets/img/blog/blog-1.jpg" alt=""/>
-							</div>
-						</div>
-						<div className="body">
-							<h5 className="post-title"><a href="blog-details.html">Lorem ipsum</a></h5>
-							<div className="post-date">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco</div>
-						</div>
-					</div>
-				</div>
-
 			</div>
 
 			<nav aria-label="Page Navigation">

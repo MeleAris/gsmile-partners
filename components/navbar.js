@@ -18,7 +18,7 @@ export default function NavBar({home}){
 									<a className="nav-link" href="/">Accueil</a>
 								</li>
 								<li className="nav-item">
-									<a className="nav-link" href="/ense/entreprise">Entreprises</a>
+									<a className="nav-link" href="/ense/liste">Entreprises</a>
 								</li>
 							</>
 						) : (
@@ -27,7 +27,7 @@ export default function NavBar({home}){
 									<a className="nav-link" href="/">Accueil</a>
 								</li>
 								<li className="nav-item active">
-									<a className="nav-link" href="/ense/entreprise">Entreprises</a>
+									<a className="nav-link" href="/ense/liste">Entreprises</a>
 								</li>
 							</>
 						)

@@ -33,8 +33,10 @@
 }
 
 .anyClass{
-  height:75%;
+  height:750px;
   overflow-y: scroll;
+  top: 0;
+  bottom: 0;
 }
 
 .blogMap{
@@ -47,7 +49,6 @@
   height: 80;
   width: 80;
   background-color: #ffffff;
-  border: 2px solid;
   border-radius: 50%;
 }
 
@@ -1940,7 +1941,6 @@ a.text-dark:hover, a.text-dark:focus {
 .widget-box {
   display: block;
   padding: 20px;
-  margin-bottom: 32px;
   border-radius: 6px;
   border: 1px solid #EDECF5;
   box-shadow: 0 3px 9px rgba(100, 95, 136, 0.15);

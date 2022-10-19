@@ -1,5 +1,4 @@
 import Head from "next/head";
-import NavBar from "./navbar";
 import Footer from "./footer";
 import BackToTop from "./backToTop";
 
@@ -18,9 +17,6 @@ export default function Layout({children, home}){
                 <script src="/assets/js/bootstrap.bundle.min.js"/>
                 <script src="/assets/vendor/wow/wow.min.js"/>
                 <script src="/assets/js/theme.js"/>
-                <script src="/assets/js/google-maps.js"/>
-                <script async defer
-		            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM&callback=initMap"></script>
             </Head> 
 
             <main>
