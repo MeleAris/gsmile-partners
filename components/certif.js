@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { api } from "../public/const";
 
 export default function Certifications(){
 
@@ -7,11 +8,10 @@ export default function Certifications(){
     const [items, setItems] = useState([]);
 
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/api/certifications")
+        fetch(api+"certifications")
         .then(res => res.json())
         .then(
         (result) => {
-            console.log(result['hydra:member'])
             setIsLoaded(true);
             setItems(result['hydra:member']);
         },
@@ -34,14 +34,14 @@ export default function Certifications(){
 
                     <div className="row">
                         {items.map(item => (
-                        <div className="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn">
-                            <div className="features">
-                            <div className="header mb-3" style={{backgroundRepeat: 'no-repeat', backgroundImage: `url(${item.image})`, backgroundSize: 'cover'}}>
+                            <div className="col-sm-6 col-lg-4 col-xl-3 py-3 wow zoomIn" key={item.id}>
+                                <div className="features">
+                                    <div className="header mb-3" style={{backgroundRepeat: 'no-repeat',         backgroundImage: `url(${item.image})`, backgroundSize: 'cover'}}>
+                                    </div>
+                                    <h5>{item.nom}</h5>
+                                    <p>{item.description}</p>
+                                </div>
                             </div>
-                            <h5>{item.nom}</h5>
-                            <p>{item.description}</p>
-                            </div>
-                        </div>
                         ))}
                     </div>
                 </div>

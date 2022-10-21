@@ -404,6 +404,22 @@ a.text-dark:hover, a.text-dark:focus {
   color: #fff;
 }
 
+.btn.social-youtube {
+  background-color: #f21d1d;
+  color: #fff;
+}
+
+.btn.social-youtube:hover,
+.btn.social-youtube:focus {
+  background-color: #e40d0d;
+  color: #fff;
+}
+
+.btn.social-web {
+  background-color: #28a745;
+  color: #fff;
+}
+
 .btn.social-twitter {
   background-color: #1DA1F2;
   color: #fff;
@@ -1185,9 +1201,14 @@ a.text-dark:hover, a.text-dark:focus {
   border-radius: 4px;
 }
 
+.page{
+  text-align: center;
+  justify-content: center;
+}
+
 .page-link:hover {
-  color: #645F88;
-  background-color: #F6F5FC;
+  color: #fff;
+  background-color: #3ff168;
   border-color: #dee1e6;
 }
 
@@ -1852,7 +1873,7 @@ a.text-dark:hover, a.text-dark:focus {
   flex-direction: row;
   align-items: baseline;
   flex: end;
-  /* justify-content: end */
+  justify-content: space-between;
   padding-left: 32px;
   padding-right: 32px;
 }

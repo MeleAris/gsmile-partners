@@ -2,15 +2,23 @@ import Layout, {siteTitle} from "../../components/layout";
 import Head from "next/head";
 import NavBar from "../../components/navbar";
 import { useEffect, useState } from 'react';
+import {api} from '../../public/const';
+import Pagination from "../../components/pagination";
+import Link from "next/link";
 
-export default function Entreprise(){
+const Entreprise = () => {
 
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [items, setItems] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(9);
+
+    const [type, setType] = useState("");
+    const [mot, setMot] = useState("");
 
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/api/abonnes")
+        fetch(api+"abonnes")
         .then(res => res.json())
         .then(
         (result) => {
@@ -23,6 +31,22 @@ export default function Entreprise(){
         }
         )
     }, []);
+
+    const indexOfLoastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLoastItem - itemsPerPage;
+    const currentItems = items.slice(indexOfFirstItem, indexOfLoastItem);
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+    const choixType = (e) => {
+        let value = e.target.value;
+        setType(value);
+    }
+
+    const choixMot = (e) => {
+        let value = e.target.value;
+        setMot(value);
+    }
 
     return (
     <div>
@@ -48,24 +72,21 @@ export default function Entreprise(){
                     </div>
                 </div>
 		    </div>
-            <div className="container pt-5 pb-5">
+            <div className="container pt-5">
                 <div className="row">
-                    <div className="col-sm-10">
+                    <div className="col">
                         <form action="#" className="form-search-blog form-filtre">
                             <div className="input-group">
                                 <div className="input-group-prepend">
-                                    <select id="categories" className="custom-select bg-light">
+                                    <select id="categories" name="type" onChange={choixType} className="custom-select bg-light">
                                         <option>Tous les types</option>
                                         <option value="pays">Pays</option>
-                                        <option value="...">...</option>
+                                        <option value="ville">ville</option>
                                     </select>
                                 </div>
-                                <input type="text" className="form-control" placeholder="Entrer un mot clé.."/>
+                                <input type="text" required className="form-control" name="mot" onChange={choixMot} placeholder="Entrer un mot clé..."/>
                             </div>
                         </form>
-                    </div>
-                    <div className="col-sm-2 text-sm-center">
-                        <button className="btn btn-success">Appliquer</button>
                     </div>
                 </div>
 
@@ -74,27 +95,39 @@ export default function Entreprise(){
                 :!isLoaded?
                     <div>...</div>
                 :
-                    <div className="row my-5">
-                        {items.map(item => (
-                            <div className="col-lg-4 py-3">
-                            <div className="card-blog">
-                                <div className="header">
-                                    <div className="post-thumb">
-                                        <img src={item.profil} alt=""/>
+                    <div className="row my-5 page">
+                        {currentItems.filter(function(val){
+                            if (type == "pays") {
+                                return val.pays.toLowerCase().includes(mot.toLocaleLowerCase());
+                            }else if(type == "ville"){
+                                return val.ville.toLowerCase().includes(mot.toLocaleLowerCase())
+                            }else{
+                                return val;
+                            }
+                        }).map(item => (
+                            <div className="col-lg-4 py-3" key={item.id}>
+                                <div className="card-blog">
+                                    <div className="header">
+                                        <div className="post-thumb">
+                                            <img src={item.profil} alt={item.nom}/>
+                                        </div>
+                                    </div>
+                                    <div className="body">
+                                        <h5 className="post-title"><Link href={'/ense/details/'+item.id}>{item.nom}</Link></h5>
+                                        <div className="post-date">{item.description}</div>
                                     </div>
                                 </div>
-                                <div className="body">
-                                    <h5 className="post-title"><a href={'/ense/'+item.id}>{item.nom}</a></h5>
-                                    <div className="post-date">{item.description}</div>
-                                </div>
                             </div>
-                        </div>
                         ))}
+                        <div className="mt-3">
+                            <Pagination itemsPerPage={itemsPerPage} totalItems={items.length} paginate={paginate}/>
+                        </div>
                     </div>
                 }
             </div>
-            
         </Layout>
     </div>
     );
 }
+
+export default Entreprise;

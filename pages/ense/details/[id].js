@@ -1,39 +1,74 @@
-import Layout, {siteTitle} from "../../components/layout";
+import Layout, {siteTitle} from "../../../components/layout";
 import Head from "next/head";
-import NavBar from "../../components/navbar";
+import NavBar from "../../../components/navbar";
 import { useEffect, useState } from 'react';
-import { useParams } from "react-router-dom";
+import { api } from "../../../public/const";
+import dateFormat from 'dateformat';
+import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
+import React from 'react'
 
-export default function (){
+const containerStyle = {
+    width: '100%',
+    height: '100%'
+  };
 
-	const [error, setError] = useState(null);
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [item, setItem] = useState({});
+export const getStaticPaths = async () => {
+	const res = await fetch(api+"abonnes");
+	const datas = await res.json();
+	const data = datas['hydra:member'];
+
+	const paths = data.map(d => {
+		return {
+			params : { id: d.id.toString()}
+		}
+	})
+
+	return {
+		paths,
+		fallback: false
+	}
+}
+
+export const getStaticProps = async (context) => {
+	const id = context.params.id;
+	const res = await fetch(api+"abonnes/" + id);
+	const data = await res.json();
+
+	return {
+		props: {ense: data}
+	}
+}
+
+const id = ({ense}) => {
+
     const [itemp, setItemp] = useState([]);
     const [itema, setItema] = useState([]);
     const [itemc, setItemc] = useState([]);
-	const params = useParams()
+
+	const { isLoaded } = useJsApiLoader({
+        id: 'google-map-script',
+        googleMapsApiKey: "AIzaSyAIA_zqjFMsJM_sxP9-6Pde5vVCTyJmUHM"
+    })
+
+    const [map, setMap] = React.useState(null)
+    
+    const onLoad = React.useCallback(function callback(map) {
+        const bounds = new window.google.maps.LatLngBounds({lat: Number(ense.latitude), lng: Number(ense.longitude)});
+        map.fitBounds(bounds);
+        setMap(map);
+    }, [])
+    
+    const onUnmount = React.useCallback(function callback(map) {
+        setMap(null)
+    }, [])
 
     useEffect(()=>{
-        fetch("http://127.0.0.1:8000/api/abonnes/"+ 2)
-        .then(res => res.json())
-        .then(
-        (result) => {
-            setIsLoaded(true);
-			setItem(result);
-            setItemp(result['produits']);
-			setItema(result['actualites']);
-			setItemc(result['certifications']);
-			console.log(result['produits']);
-        },
-        (error) => {
-            setIsLoaded(false);
-            setError(error);
-        }
-        )
+		setItemp(ense['produits']);
+		setItema(ense['actualites']);
+		setItemc(ense['certifications']);
     }, []);
 
-    return (
+    return isLoaded?(
         <Layout>
 		<Head>
 			<title>Partner | {siteTitle}</title>
@@ -48,7 +83,7 @@ export default function (){
 				<ul className="breadcrumb p-0 mb-0 bg-transparent">
 					<li className="breadcrumb-item"><a href="/">Accueil</a></li>
 					<li className="breadcrumb-item"><a href="/ense/liste">Entreprises</a></li>
-					<li className="breadcrumb-item active">{item.nom}</li>
+					<li className="breadcrumb-item active">{ense.nom}</li>
 				</ul>
 			</nav>
 
@@ -57,39 +92,30 @@ export default function (){
 					<div className="blog-single-wrap">
 						<div className="header">
 							<div className="post-thumb">
-								<img src={item.banniere} alt=""/>
+								<img src={ense.banniere} alt=""/>
 							</div>
 							<div className="meta-header mt-2 mb-2">
 								<div className="post-sharer">
-									{item.facebook !==null?<a target='_blank' href={item.facebook} className="btn social-facebook"><span
+									{ense.facebook !==null?<a target='_blank' href={ense.facebook} className="btn social-facebook"><span
 											className="mai-logo-facebook-f"></span></a>:<></>}
 									
-									{item.youtube !==null?<a target='_blank' href={item.youtube} className="btn social-facebook"><span
-											className="mai-youtube-f"></span></a>:<></>}
+									{ense.youtube !==null?<a target='_blank' href={ense.youtube} className="btn social-youtube"><span
+											className="mai-logo-youtube"></span></a>:<></>}
 									
-									{item.linkedin !==null?<a target='_blank' href={item.linkedin} className="btn social-linkedin"><span
+									{ense.linkedin !==null?<a target='_blank' href={ense.linkedin} className="btn social-linkedin"><span
 											className="mai-logo-linkedin"></span></a>:<></>}
-									
-									{item.siteWeb !==null?<a target='_blank' href={item.siteWeb} className="btn social-twitter"><span
-											className="mai-globe"></span></a>:<></>}
+								</div>
+								<div className="post-sharer">
+									{ense.siteWeb !==null?<a target='_blank' href={ense.siteWeb} className="btn social-web"><span>Visiter mon site</span></a>:<></>}
 								</div>
 							</div>
 						</div>
-						<h1 className="post-title text-primary">{item.nom}</h1>
+						<h1 className="post-title text-primary">{ense.nom}</h1>
 						<div className="post-content">
-							<p>{item.presentation}</p>
-							<blockquote className="quote">“{item.description}”
-								<span className="author">― admin</span>
+							<p>{ense.presentation}</p>
+							<blockquote className="quote">“{ense.description}”
+								<span className="author">― {ense.nom}</span>
 							</blockquote>
-							<p>Praesent vel mi bibendum, finibus leo ac, condimentum arcu. Pellentesque sem ex,
-								tristique sit amet
-								suscipit in, mattis imperdiet enim. Integer tempus justo nec velit fringilla, eget
-								eleifend neque
-								blandit. Sed tempor magna sed congue auctor. Mauris eu turpis eget tortor ultricies
-								elementum. Phasellus
-								vel placerat orci, a venenatis justo. Phasellus faucibus venenatis nisl vitae
-								vestibulum. Praesent id
-								nibh arcu. Vivamus sagittis accumsan felis, quis vulputate</p>
 						</div>
 					</div>
 
@@ -98,7 +124,7 @@ export default function (){
 						<form action="#" className="">
 							<div className="form-row form-group">
 								<div className="col-md-6">
-									<label htmlFor="name">Name <span className="text-danger">*</span></label>
+									<label htmlFor="name">Nom <span className="text-danger">*</span></label>
 									<input type="text" className="form-control" id="name"/>
 								</div>
 								<div className="col-md-6">
@@ -142,7 +168,7 @@ export default function (){
 										<h6 className="post-title"><a href="#">{a.contenu}</a>
 										</h6>
 										<div className="meta">
-											<a href="#"><span className="mai-calendar"></span>{a.createdAt}</a>
+											<a href="#"><span className="mai-calendar"></span>{dateFormat(a.createdAt, 'dd/mm/yyyy', )}</a>
 											<a href="#"><span className="mai-person"></span> Admin</a>
 										</div>
 									</div>
@@ -165,8 +191,20 @@ export default function (){
 			</div>
 			<div className="row blogMap">
 				<div className="col px-0">
-					<div className="maps-container">
-						<div id="google-maps"></div>
+					<div className="maps-container" id="google-maps">
+						<GoogleMap
+							mapContainerStyle={containerStyle}
+							center={{lat: Number(ense.latitude), lng: Number(ense.longitude)}}
+							zoom={9}
+							onLoad={onLoad}
+							onUnmount={onUnmount}
+						>
+							<Marker
+							position={{lat: Number(ense.latitude), lng: Number(ense.longitude)}}
+							title={ense.nom}
+							/>
+							<></>
+						</GoogleMap>
 					</div>
 				</div>
 			</div>
@@ -174,5 +212,7 @@ export default function (){
 	    </div>
         </div>
         </Layout>
-    );
+    ):<></>;
 }
+
+export default React.memo(id)
