@@ -10,6 +10,110 @@
   font-display: block;
 }
 
+@font-face {
+  font-family: 'Mukta Mahee Regular';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee Regular'), url('../fonts/MuktaMahee-Regular.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Mukta Mahee ExtraLight';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee ExtraLight'), url('../fonts/MuktaMahee-ExtraLight.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Mukta Mahee Light';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee Light'), url('../fonts/MuktaMahee-Light.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Mukta Mahee Medium';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee Medium'), url('../fonts/MuktaMahee-Medium.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Mukta Mahee SemiBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee SemiBold'), url('../fonts/MuktaMahee-SemiBold.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Mukta Mahee Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee Bold'), url('../fonts/MuktaMahee-Bold.woff') format('woff');
+  }
+  
+
+  @font-face {
+  font-family: 'Mukta Mahee ExtraBold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Mukta Mahee ExtraBold'), url('../fonts/MuktaMahee-ExtraBold.woff') format('woff');
+  }
+
+  @font-face {
+    font-family: 'Quicksand Book';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Book.ttf') format('truetype');
+    }
+
+  @font-face {
+    font-family: 'Quicksand Book Oblique';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Book_Oblique.ttf') format('truetype');
+    }
+
+  @font-face {
+    font-family: 'Quicksand Bold Oblique';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Bold_Oblique.ttf') format('truetype');
+    }
+    
+  @font-face {
+    font-family: 'Quicksand Bold';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Bold.ttf') format('truetype');
+    }
+
+  @font-face {
+    font-family: 'Quicksand Dash';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Dash.ttf') format('truetype');
+    }
+
+  @font-face {
+    font-family: 'Quicksand Light';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Light.ttf') format('truetype');
+    }
+
+  @font-face {
+    font-family: 'Quicksand Light Oblique';
+    font-style: normal;
+    font-weight: normal;
+    src: url('../fonts/Quicksand_Light_Oblique.ttf') format('truetype');
+    }            
+
 [class^="mai-"], [class*=" mai-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'maicons' !important;
