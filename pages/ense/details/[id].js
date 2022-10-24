@@ -168,7 +168,7 @@ const id = ({ense}) => {
 										<h6 className="post-title"><a href="#">{a.contenu}</a>
 										</h6>
 										<div className="meta">
-											<a href="#"><span className="mai-calendar"></span>{dateFormat(a.createdAt, 'dd/mm/yyyy', )}</a>
+											<a href="#"><span className="mai-calendar"></span>{a.createdAt}</a>
 											<a href="#"><span className="mai-person"></span> Admin</a>
 										</div>
 									</div>

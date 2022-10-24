@@ -18,9 +18,16 @@ function Body(){
 
     const [error, setError] = useState(null);
     const [isLoad, setIsLoad] = useState(false);
-    const [items, setItems] = useState([]); 
-    const [type, setType] = useState("");
-    const [mot, setMot] = useState("");
+
+    const [items, setItems] = useState([]);
+    const [cert, setCert] = useState([]);
+    const [prod, setProd] = useState([]);
+    const [pays, setPays] = useState([]);
+
+    const [pa, setPa] = useState("");
+    const [ce, setCe] = useState("");
+    const [po, setPo] = useState("");
+
 
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
@@ -51,17 +58,40 @@ function Body(){
             setIsLoad(false);
             setError(error);
         }
-        )
+        );
+        fetch(api+"certifications")
+        .then(res => res.json())
+        .then(
+        (result) => {
+            setCert(result['hydra:member']);
+        });
+
+        fetch(api+"produits")
+        .then(res => res.json())
+        .then(
+        (result) => {
+            setProd(result['hydra:member']);
+        });
+
+        fetch(api+"pays")
+        .then(res => res.json())
+        .then(
+        (result) => {
+            setPays(result['hydra:member']);
+        });
     }, []);
 
-    const choixType = (e) => {
+    const handler_Pa = (e) => {
         let value = e.target.value;
-        setType(value);
+        setPa(value);
     }
-
-    const choixMot = (e) => {
+    const handler_Ce = (e) => {
         let value = e.target.value;
-        setMot(value);
+        setCe(value);
+    }
+    const handler_Po = (e) => {
+        let value = e.target.value;
+        setPo(value);
     }
 
     if(error) {
@@ -74,17 +104,40 @@ function Body(){
         <div className='filtre'>
             <div className="row">
 				<form className="form-search-blog form-filtre">
-                    <div className="col-sm-12">
+                    <div className="col-sm-4">
                             <div className="input-group">
                                 <div className="input-group-prepend">
-                                    <select id="categories" name='type' onChange={choixType} className="custom-select bg-light">
-                                        <option value="">Tous les types</option>
-                                        <option value="pays">Pays</option>
-                                        <option value="ville">Ville</option>
-                                        <option value="...">...</option>
+                                    <select id="" name='Pays' onChange={handler_Pa} className="custom-select bg-light">
+                                        <option value="">Pays</option>
+                                        {pays.map(item => (
+                                            <option value={item.id}>{item.nom}</option>
+                                        ))}
                                     </select>
                                 </div>
-                                <input type="text" required name='mot' onChange={choixMot} className="form-control" placeholder="Entrer un mot clé.."/>
+                            </div>
+                    </div>
+                    <div className="col-sm-4">
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <select id="" name='Certif' onChange={handler_Ce} className="custom-select bg-light">
+                                        <option value="">Certifications</option>
+                                        {cert.map(item => (
+                                            <option key={item.id} value={item.id}>{item.nom}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                    <div className="col-sm-4">
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <select id="" name='Prod' onChange={handler_Po} className="custom-select bg-light">
+                                        <option value="">Produits</option>
+                                        {prod.map(item => (
+                                            <option key={item.id} value={item.id}>{item.nom}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                     </div>
 				</form>
@@ -102,18 +155,10 @@ function Body(){
                         <div className='widget-box anyClass'>
                             <h4>Nos partenaires</h4>
                             <div className='divider'></div>
-                            {items.filter(function(val){
-                                if (type == "pays") {
-                                    return val.pays.toLowerCase().includes(mot.toLocaleLowerCase())
-                                }else if(type == "ville"){
-                                    return val.ville.toLowerCase().includes(mot.toLocaleLowerCase())
-                                }else{
-                                    return val;
-                                }
-                            }).map(val =>(
+                            {items.map(val =>(
                                 <div className='blog-item' key={val.id}>
                                     <Link className='post-thumb' href={'/ense/details/'+val.id}>
-                                        <img src={val.profil} alt=""/>
+                                        <img src={val.profil} alt="" height="100" width="100"/>
                                     </Link>
                                     <div className='content'>
                                         <h6 className='post-title'><Link href={'/ense/details/'+val.id}>{val.nom}</Link></h6>
@@ -135,15 +180,7 @@ function Body(){
                                 onLoad={onLoad}
                                 onUnmount={onUnmount}
                             >
-                                {items.filter(function(val){
-                                    if (type == "pays") {
-                                        return val.pays.toLowerCase().includes(mot.toLocaleLowerCase())
-                                    }else if(type == "ville"){
-                                        return val.ville.toLowerCase().includes(mot.toLocaleLowerCase())
-                                    }else{
-                                        return val;
-                                    }
-                                }).map(val =>(
+                                {items.map(val =>(
                                     <Marker
                                     position={{lat: Number(val.latitude), lng: Number(val.longitude)}}
                                     title={val.nom}
@@ -161,17 +198,40 @@ function Body(){
         <div className='filtre'>
             <div className="row">
 				<form className="form-search-blog form-filtre">
-                    <div className="col-sm-12">
+                    <div className="col-sm-4">
                             <div className="input-group">
                                 <div className="input-group-prepend">
-                                    <select id="categories" name='type' onChange={choixType} className="custom-select bg-light">
-                                        <option value="">Critère</option>
-                                        <option value="pays">Pays</option>
-                                        <option value="ville">Ville</option>
-                                        <option value="...">...</option>
+                                    <select id="" name='Pays' onChange={handler_Pa} className="custom-select bg-light">
+                                        <option value="">Pays</option>
+                                        {pays.map(item => (
+                                            <option value={item.nom}>{item.nom}</option>
+                                        ))}
                                     </select>
                                 </div>
-                                <input type="text" required name='mot' onChange={choixMot} className="form-control" placeholder="Entrer un mot clé.."/>
+                            </div>
+                    </div>
+                    <div className="col-sm-4">
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <select id="" name='Certif' onChange={handler_Ce} className="custom-select bg-light">
+                                        <option value="">Certification</option>
+                                        {cert.map(item => (
+                                            <option key={item.id} value={item.nom}>{item.nom}</option>
+                                        ))}
+                                    </select>
+                                </div>
+                            </div>
+                    </div>
+                    <div className="col-sm-4">
+                            <div className="input-group">
+                                <div className="input-group-prepend">
+                                    <select id="" name='Prod' onChange={handler_Po} className="custom-select bg-light">
+                                        <option value="">Produit</option>
+                                        {prod.map(item => (
+                                            <option key={item.id} value={item.nom}>{item.nom}</option>
+                                        ))}
+                                    </select>
+                                </div>
                             </div>
                     </div>
 				</form>
@@ -189,15 +249,7 @@ function Body(){
                         <div className='widget-box anyClass'>
                             <h4>Nos partenaires</h4>
                             <div className='divider'></div>
-                            {items.filter(function(val){
-                                if (type == "pays") {
-                                    return val.pays.toLowerCase().includes(mot.toLocaleLowerCase())
-                                }else if(type == "ville"){
-                                    return val.ville.toLowerCase().includes(mot.toLocaleLowerCase())
-                                }else{
-                                    return val;
-                                }
-                            }).map(val =>(
+                            {items.map(val =>(
                                 <div className='blog-item' key={val.id}>
                                     <a className='post-thumb' href={'/ense/'+val.id}>
                                         <img src={val.profil} alt=""/>

@@ -14,8 +14,13 @@ const Entreprise = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(9);
 
-    const [type, setType] = useState("");
-    const [mot, setMot] = useState("");
+    const [cert, setCert] = useState([]);
+    const [prod, setProd] = useState([]);
+    const [pays, setPays] = useState([]);
+
+    const [pa, setPa] = useState("");
+    const [ce, setCe] = useState("");
+    const [po, setPo] = useState("");
 
     useEffect(()=>{
         fetch(api+"abonnes")
@@ -29,7 +34,27 @@ const Entreprise = () => {
             setIsLoaded(false);
             setError(error);
         }
-        )
+        );
+        fetch(api+"certifications")
+        .then(res => res.json())
+        .then(
+        (result) => {
+            setCert(result['hydra:member']);
+        });
+
+        fetch(api+"produits")
+        .then(res => res.json())
+        .then(
+        (result) => {
+            setProd(result['hydra:member']);
+        });
+
+        fetch(api+"pays")
+        .then(res => res.json())
+        .then(
+        (result) => {
+            setPays(result['hydra:member']);
+        });
     }, []);
 
     const indexOfLoastItem = currentPage * itemsPerPage;
@@ -38,14 +63,17 @@ const Entreprise = () => {
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-    const choixType = (e) => {
+    const handler_Pa = (e) => {
         let value = e.target.value;
-        setType(value);
+        setPa(value);
     }
-
-    const choixMot = (e) => {
+    const handler_Ce = (e) => {
         let value = e.target.value;
-        setMot(value);
+        setCe(value);
+    }
+    const handler_Po = (e) => {
+        let value = e.target.value;
+        setPo(value);
     }
 
     return (
@@ -73,21 +101,45 @@ const Entreprise = () => {
                 </div>
 		    </div>
             <div className="container pt-5">
-                <div className="row">
-                    <div className="col">
-                        <form action="#" className="form-search-blog form-filtre">
-                            <div className="input-group">
-                                <div className="input-group-prepend">
-                                    <select id="categories" name="type" onChange={choixType} className="custom-select bg-light">
-                                        <option>Tous les types</option>
-                                        <option value="pays">Pays</option>
-                                        <option value="ville">ville</option>
-                                    </select>
+                <div className="rowa align-center">
+                    <form className="form-search-blog form-filtre">
+                        <div className="col-sm-4">
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <select id="" name='Pays' onChange={handler_Pa} className="custom-select bg-light">
+                                            <option value="">Pays</option>
+                                            {pays.map(item => (
+                                                <option value={item.nom}>{item.nom}</option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
-                                <input type="text" required className="form-control" name="mot" onChange={choixMot} placeholder="Entrer un mot clé..."/>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                        <div className="col-sm-4">
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <select id="" name='Certif' onChange={handler_Ce} className="custom-select bg-light">
+                                            <option value="">Certification</option>
+                                            {cert.map(item => (
+                                                <option key={item.id} value={item.nom}>{item.nom}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                        </div>
+                        <div className="col-sm-4">
+                                <div className="input-group">
+                                    <div className="input-group-prepend">
+                                        <select id="" name='Prod' onChange={handler_Po} className="custom-select bg-light">
+                                            <option value="">Produit</option>
+                                            {prod.map(item => (
+                                                <option key={item.id} value={item.nom}>{item.nom}</option>
+                                            ))}
+                                        </select>
+                                    </div>
+                                </div>
+                        </div>
+                    </form>
                 </div>
 
                 {error?
@@ -96,15 +148,7 @@ const Entreprise = () => {
                     <div>...</div>
                 :
                     <div className="row my-5 page">
-                        {currentItems.filter(function(val){
-                            if (type == "pays") {
-                                return val.pays.toLowerCase().includes(mot.toLocaleLowerCase());
-                            }else if(type == "ville"){
-                                return val.ville.toLowerCase().includes(mot.toLocaleLowerCase())
-                            }else{
-                                return val;
-                            }
-                        }).map(item => (
+                        {currentItems.map(item => (
                             <div className="col-lg-4 py-3" key={item.id}>
                                 <div className="card-blog">
                                     <div className="header">
